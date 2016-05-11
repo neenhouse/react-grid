@@ -16,7 +16,7 @@ ES6/7 Grid written in ReactJS
 ## Installation
 
 ```
-npm install react-grid --save;
+npm install neenhouse-react-grid --save;
 ```
 
 
