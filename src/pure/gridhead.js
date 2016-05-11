@@ -1,9 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Util from './util';
-import BulkOptions from './pure/bulkoptions';
-import BulkSelection from './pure/bulkselection';
-import ExpandRowColumn from './pure/expandrowcolumn';
+import Util from '../util';
+import BulkOptions from './bulkoptions';
+import BulkSelection from './bulkselection';
+import ExpandRowColumn from './expandrowcolumn';
 
 function sort(columnHeader, sortData, dispatch, ev){
 	ev.preventDefault();
@@ -19,7 +18,7 @@ function sort(columnHeader, sortData, dispatch, ev){
 	dispatch('updateSortData', [newSort]);
 }
 
-const Header = ({ columnHeaders, dispatch, sortData, bulkSelectionEnabled, renderExpandedRow }) => {
+const GridHead = ({ columnHeaders, dispatch, sortData, bulkSelectionEnabled, renderExpandedRow }) => {
 	var currSort = (sortData && sortData[0]) || {};
 	return (
 		<div className="grid-header">
@@ -52,4 +51,4 @@ const Header = ({ columnHeaders, dispatch, sortData, bulkSelectionEnabled, rende
 	);
 };
 
-export default Header;
+export default GridHead;

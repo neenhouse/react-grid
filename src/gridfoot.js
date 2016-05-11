@@ -21,9 +21,9 @@ var ClassProperties = {
   index:[React.PropTypes.number, null]
 };
 
-export default class TableFoot extends React.Component {
+export default class GridFoot extends React.Component {
 
-  static displayName = 'TableFoot';
+  static displayName = 'GridFoot';
 
   ///// Class Propreties
 	static propTypes = Object.keys(ClassProperties).reduce(function(o, v, i) {
@@ -39,8 +39,8 @@ export default class TableFoot extends React.Component {
   state = {};
 
   ///// Constructor
-  constructor(props){
-    super(props);
+  constructor(props, context){
+    super(props, context);
     this.state.index = props.index;
   }
 
