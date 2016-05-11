@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactGrid from '../src/index';
 import peopleJSON from './2000people.js';
-import { clone } from './util';
 import './demostyle';
 import $ from 'jquery';
 import AjaxStore from './ajaxstore';

@@ -10,6 +10,7 @@ test.entry = glob.sync(path.join(__dirname, '../src/**/*.spec.js'));
 // Necessary config for enzyme
 test.externals = {
   'cheerio': 'window',
+  'react/addons':true,
   'react/lib/ExecutionEnvironment': true,
   'react/lib/ReactContext': true,
 }
