@@ -1,0 +1,68 @@
+{
+  "name": "react-grid",
+  "version": "1.0.0",
+  "description": "ReactJS Grid",
+  "main": "src/index.js",
+  "license": "SEE LICENSE IN LICENSE",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack && cross-env NODE_ENV=production webpack --config webpack.demo.js",
+    "demo": "cross-env NODE_ENV=development node webpack.demo.js",
+    "stats": "webpack --config ./webpack.stats.js --profile --json > ./reports/webpackstats.json && open https://webpack.github.io/analyse/ && rm reports/app.js && rm -rf reports/assets",
+    "test": "webpack --config ./test/webpack.config.js && mocha test/index.js"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "author": {
+    "name": "Chris Nienhuis",
+    "email": "neenhouse@gmail.com"
+  },
+  "tags": [
+    "React",
+    "Grid"
+  ],
+  "dependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.7.2",
+    "babel-eslint": "^6.0.4",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-react-transform": "^2.0.2",
+    "babel-preset-airbnb": "^2.0.0",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "chai": "^3.5.0",
+    "classnames": "^2.2.5",
+    "colors": "^1.1.2",
+    "cross-env": "^1.0.7",
+    "css-loader": "^0.23.1",
+    "enzyme": "^2.2.0",
+    "eslint": "^2.9.0",
+    "eslint-loader": "^1.3.0",
+    "eslint-plugin-react": "^5.0.1",
+    "file-loader": "^0.8.5",
+    "glob": "^7.0.3",
+    "image-webpack-loader": "^1.6.3",
+    "jsdom": "^9.0.0",
+    "less": "^2.6.1",
+    "less-loader": "^2.2.2",
+    "less-plugin-autoprefix": "^1.5.1",
+    "less-plugin-clean-css": "^1.5.1",
+    "merge": "^1.2.0",
+    "mocha": "^2.4.5",
+    "mocha-bamboo-reporter": "^1.1.0",
+    "open": "0.0.5",
+    "pre-commit": "^1.1.3",
+    "react": "^15.0.2",
+    "react-addons-test-utils": "^15.0.2",
+    "react-dom": "^15.0.2",
+    "redbox-react": "^1.2.2",
+    "serialize-javascript": "^1.2.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-hot-middleware": "^2.10.0",
+    "webpack-visualizer-plugin": "^0.1.5"
+  }
+}

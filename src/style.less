@@ -1,0 +1,87 @@
+.react-grid-wrapper{
+  .grid-table {
+    width:100%;
+    .row-container{
+      padding:10px;
+      box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
+      border-radius: 2px;
+      background-color: rgb(255, 255, 255);
+      margin-bottom:10px;
+      transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+      box-sizing: border-box;
+      .expanded{
+        padding-top:20px;
+      }
+    }
+    .grid-row {
+      display:flex;
+      color: rgba(0, 0, 0, 0.870588);
+      font-family: Roboto, sans-serif;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      .grid-cell{
+        &.perceived-loading{
+      		background:blue;
+      	}
+      }
+    }
+    .grid-header{
+      padding:10px;
+      .grid-row{
+        box-shadow:none;
+        background:none;
+      }
+    }
+    .grid-body {
+      .clickable{
+        cursor:pointer;
+      }
+    }
+  }
+  .grid-footer{
+    .pager-range,
+    .pager-controls{
+      width:50%;
+      display:inline-block;
+    }
+    .pager-range{
+      text-align:right;
+      .pager-records{
+        display:inline-block;
+      }
+    }
+    .pager-controls{
+
+    }
+  }
+  .hidden {
+    display:none;
+  }
+
+  .perceived-loading{
+  	background:#E1E2E2;
+  	opacity:.5;
+  	width:100%;
+  	display:inline-block;
+  	padding:0;
+  	margin:0;
+  	height:14px;
+  	line-height:normal;
+  	animation: pulsate 1s linear;
+  	animation-iteration-count: infinite;
+
+  }
+  .perceived-loading:before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+  }
+
+  @-webkit-keyframes pulsate {
+      0% {opacity: 0.6;}
+      25% {opacity: 1.0;}
+      50% {opacity: 0.8;}
+      75% {opacity: 0.7;}
+      100% {opacity: 0.6;}
+  }
+}
