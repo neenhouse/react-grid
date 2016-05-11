@@ -1,4 +1,4 @@
-# React Grid
+# React Grid [![Build Status](https://travis-ci.org/neenhouse/react-grid.svg?branch=master)](https://travis-ci.org/neenhouse/react-grid)
 
 ES6/7 Grid written in ReactJS
 
