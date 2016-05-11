@@ -3,7 +3,7 @@ import React from 'react';
 import classnames from 'classnames';
 import GridHead from './pure/gridhead';
 import GridBody from './pure/gridbody';
-import GridFoot from './gridfoot';
+import GridFoot from './pure/gridfoot';
 import Util from './util';
 import EmptyMessage from './pure/emptymessage';
 
@@ -139,7 +139,14 @@ class ReactGrid extends React.Component {
 				this.toggleExpanded(data);
 				break;
 			case 'updatePageData':
-				this.updatePagerState(data);
+				// If user backspaces to a blank input, update state to show that
+				// but do not dispatch any actions
+				if(!data.index){
+					this.state.pager.index = '';
+				} else {
+					// Otherwise, process as usual
+					this.updatePagerState(data);
+				}
 				this.forceUpdate();
 				break;
 			default:
