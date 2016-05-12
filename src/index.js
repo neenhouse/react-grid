@@ -11,6 +11,9 @@ var ClassProperties = {
 	// If set to true, renders a checkbox in the first column
 	bulkSelectionEnabled: [React.PropTypes.bool, false],
 
+	// Use client side paging
+	clientSide: [React.PropTypes.bool, false],
+
 	// Array of column definitions (required)
 	// Ex: [{
 	//			description: 'Name',
@@ -30,6 +33,9 @@ var ClassProperties = {
 	// Function that is executed on callback when accessing data response
 	dataAccessor: [React.PropTypes.func, function(response){ return response; }],
 
+	// Message to display if data error occurs
+	dataErrorMessage: [React.PropTypes.string, null],
+
 	// Callback function for table interactions
 	dispatch: [React.PropTypes.func, function(){}],
 
@@ -38,6 +44,15 @@ var ClassProperties = {
 
 	// Number of items to show when loading data (defaults to 10)
 	numberOfLoadingItems: [React.PropTypes.number, 10],
+
+	// Callback for paging
+	onPage: [React.PropTypes.func, function(pageData){ console.log('page updated:', pageData)}],
+
+	// Callback for sorting
+	onSort: [React.PropTypes.func, function(sortData){ console.log('sort updated:', sortData)}],
+
+	// Callback for toggling
+	onToggle: [React.PropTypes.func, function(allToggled){ console.log('toggled:', allToggled)}],
 
 	// Provide pager state
 	pager: [React.PropTypes.object, {
@@ -57,20 +72,20 @@ var ClassProperties = {
 	// }
 	renderRow:[React.PropTypes.func.isRequired, null],
 
+	// Sets initial sort information
+	sortData: [React.PropTypes.object, {
+		sortColumn:null,
+		sortDirection:null
+	}],
+
 	// If set to false, will allow multiple rows to be expanded
 	singleExpand: [React.PropTypes.bool, true],
-
-	// Prop keys that determine if component is re-rendered
-	updateProps: [React.PropTypes.array, ['pager', 'data']],
 
 	// If set to false, does not render column headers
 	useHeader: [React.PropTypes.bool, true],
 
 	// Sets usage mode of pager (supports true, false, and 'manual')
-	usePager: [React.PropTypes.any, true],
-
-	// Unique identifier for data table instance
-	idKey: [React.PropTypes.string, null]
+	usePager: [React.PropTypes.any, true]
 };
 
 class ReactGrid extends React.Component {
@@ -92,7 +107,9 @@ class ReactGrid extends React.Component {
 	// Default state
 	state = {
 		pager:null,
-		data:null
+		sortData:null,
+		data:null,
+		bulkSelectionChecked:false
 	};
 
 	constructor(props, context){
@@ -103,24 +120,30 @@ class ReactGrid extends React.Component {
 		this.updatePagerState(props.pager);
 	}
 
-	componentWillReceiveProps(nextProps){
-		for(var i=0; i<this.props.updateProps.length; i++){
-			var prop = this.props.updateProps[i];
-			if(nextProps[prop] !== undefined && JSON.stringify(nextProps[prop]) !== JSON.stringify(this.props[prop])){
-				if(prop === 'pager'){
-					var dataLength = (nextProps.data && nextProps.data.length);
-					this.updatePagerState(nextProps, dataLength)
-				} else {
-					this.state[prop] = nextProps[prop];
-				}
-				this.forceUpdate();
-			}
+	componentWillReceiveProps(nextProps, prevProps){
+		// Check if pager state needs update
+		if(nextProps.data !== undefined && Util.deepCompare(nextProps.data, this.state.data)){
+			this.state.data = nextProps.data;
+			this.forceUpdate();
+		}
+
+		// Check if data state needs update
+		if(nextProps.pager !== undefined && Util.deepCompare(nextProps.pager, this.state.pager)){
+			var dataLength = (nextProps.data && nextProps.data.length);
+			this.updatePagerState(nextProps.pager, dataLength);
+			this.forceUpdate();
+		}
+
+		// Check if data state needs update
+		if(nextProps.sortData !== undefined && Util.deepCompare(nextProps.sortData, this.state.sortData)){
+			this.state.sortData = nextProps.sortData;
+			this.forceUpdate();
 		}
 	}
 
 	getData(){
 		// Apply local paging options
-    if(this.props.usePager === true && this.state.data){
+    if(this.props.usePager === true && this.props.clientSide === true && this.state.data){
       return this.state.data.slice(this.state.pager.first-1, this.state.pager.last-1);
     }
 		return this.state.data;
@@ -141,13 +164,40 @@ class ReactGrid extends React.Component {
 			case 'updatePageData':
 				// If user backspaces to a blank input, update state to show that
 				// but do not dispatch any actions
-				if(!data.index){
+				if(data.index !== undefined && !data.index){
 					this.state.pager.index = '';
 				} else {
 					// Otherwise, process as usual
 					this.updatePagerState(data);
+					this.props.onPage(this.state.pager);
 				}
+
 				this.forceUpdate();
+				break;
+			case 'updateSortData':
+				this.props.onSort(data);
+				this.setState({
+					sortData:data
+				});
+				break;
+			case 'toggleCheckbox':
+				if(data.__all === true){
+					this.state.bulkSelectionChecked = !this.state.bulkSelectionChecked;
+					this.getData().forEach(function toggle(v){
+						v.checked = this.state.bulkSelectionChecked
+					}.bind(this));
+				} else {
+					var row = Util.findRecord(this.getData(), data);
+					row.checked = !row.checked;
+				}
+				var checkedRows = Util.getChecked(this.getData());
+				this.props.onToggle(checkedRows);
+				break;
+			case 'toggleAllCheckboxes':
+				// TODO: implement this
+				this.getData().forEach(function toggle(v){
+					v.checked = shouldCheck;
+				});
 				break;
 			default:
 				console.warn('unimplemented action:', action);
@@ -178,27 +228,6 @@ class ReactGrid extends React.Component {
 		this.forceUpdate();
   }
 
-  /**
-   *  toggleCheckbox()
-   *  @param rowData {object}
-   *  Given a row of data, flip "checked" property and raise event
-   */
-  toggleCheckbox(rowData){
-    var row = Util.findRecord(this.getData(), rowData);
-    return (row.checked = !row.checked);
-  }
-
-  /**
-   *  updateAllCheckboxes()
-   *  @param shouldCheck {boolean}
-   *  Set all data points' checked value to true/false (check/uncheck all) based on shouldCheck boolean value
-   */
-  updateAllCheckboxes(shouldCheck){
-    this.getData().forEach(function toggle(v){
-      v.checked = shouldCheck;
-    });
-	}
-
 	/**
 	 *	render()
 	 *  Render this component
@@ -210,7 +239,7 @@ class ReactGrid extends React.Component {
 		return (
 				<div className='rg-wrapper'>
 					<div className='rg-grid'>
-						<GridHead {...this.props} data={this.getData()} columnHeaders={columnHeaders} />
+						<GridHead {...this.props} data={this.getData()} dispatch={this.dispatch.bind(this)} columnHeaders={columnHeaders} sortData={this.state.sortData} bulkSelectionChecked={this.state.bulkSelectionChecked}/>
 						<GridBody {...this.props} data={this.getData()} dispatch={this.dispatch.bind(this)} columnHeaders={columnHeaders} />
 					</div>
 					<GridFoot {...this.props} data={this.state.data} dispatch={this.dispatch.bind(this)} {...this.state.pager} />

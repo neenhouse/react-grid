@@ -12,16 +12,18 @@ var bus = new EventEmitter();
 var columnHeaders = [{
   description: 'Name',
   flex: 1,
-  sortColumn:'Name'
+  sortColumn:'firstName'
 }, {
   description: 'Email',
-  flex: 1
+  flex: 1,
+  sortColumn:'email'
 }, {
   description: 'Address',
   flex:2
 }, {
   description: 'Rating',
-  flex:1
+  flex:1,
+  sortColumn:'rating'
 }];
 
 function renderRow(rowData, i){
@@ -38,13 +40,13 @@ function renderExpandedRow(rowData){
 }
 
 var allExamples = [{
-  title:'Basic',
+  title:'Tabular Grid',
   config:{
     ...ReactGrid.defaultProps,
     columnHeaders: columnHeaders,
-    data:peopleJSON,
     renderRow: renderRow,
     renderExpandedRow: renderExpandedRow,
+    bulkSelectionEnabled:true
   }
 }];
 
@@ -67,13 +69,25 @@ class Demo extends React.Component {
   constructor(props){
     super(props);
     // Fake ajax external state provider
-    bus.on('updategriddata', function(start, end){
+    bus.on('updategriddata', function(start, end, sortColumn, sortDirection){
+      this.state.example.config.data = null;
+      if(sortDirection && sortColumn){
+        this.state.example.config.sortData = {
+          sortDirection:sortDirection,
+          sortColumn:sortColumn
+        }
+      }
+      this.forceUpdate();
       setTimeout(function(){
-        this.state.example.config.data = AjaxStore.get(start, end);
-        this.state.example.config.pager.total = AjaxStore.get().length;
+        this.state.example.config.data = AjaxStore.get(start, end, sortDirection, sortColumn);
+        this.state.example.config.pager.total = AjaxStore.getTotal();
         this.forceUpdate();
       }.bind(this), 1000);
     }.bind(this));
+  }
+
+  componentDidMount(){
+    bus.emit('updategriddata', 0, 20, 'firstName', 'ASC');
   }
 
   loadExample(example){
@@ -124,12 +138,24 @@ class Demo extends React.Component {
     this.forceUpdate();
   }
 
+  sort(sortData){
+    // Sort data
+    bus.emit('updategriddata', null, null, sortData.sortColumn, sortData.sortDirection);
+  }
+
+  page(pageData){
+    this.state.example.config.pager = pageData;
+    bus.emit('updategriddata', pageData.first, pageData.last);
+  }
+
+  toggle(toggled){
+    this.setState({
+      toggled:toggled.length
+    });
+  }
+
   render(){
     if(!this.state.example){ return null; }
-    var formGroupStyle = {
-      display:'inline-block',
-      marginRight:30
-    };
     var textAreaClassName = (this.state.editConfigErrors) ? 'errors' : '';
     return (
       <div className="container">
@@ -139,20 +165,25 @@ class Demo extends React.Component {
         </pre>
 
         <div className="row">
-          <div className="col-3">
-            <h3>Controls</h3>
-            { allExamples.map(function(example){
-                return <button key={example.title} onClick={this.loadExample.bind(this, example)}>{example.title}</button>;
+          <div className="col-5">
+            <h3>Test Controls</h3>
+            { /*
+              TODO: toggle between examples
+              allExamples.map(function(example){
+                return <div className='form-group' key={example.title}>
+                          <button onClick={this.loadExample.bind(this, example)}>{example.title}</button>
+                       </div>;
               }.bind(this))
+              */
             }
-            <div className='form-group' style={formGroupStyle}>
+            <div className='form-group'>
               <button onClick={this.toggleLoading.bind(this)}>Trigger 1s Reload</button>
             </div>
-            <div className='form-group' style={formGroupStyle}>
+            <div className='form-group'>
               <button onClick={this.emptyData.bind(this)}>Empty Grid</button>
             </div>
           </div>
-          <div className="col-4">
+          <div className="col-5">
             <h3>Edit Options</h3>
             <textarea className={textAreaClassName} style={{ width:'100%', height:100}} value={this.state.configEdit} onChange={this.updateConfig.bind(this, 'full')}/>
           </div>
@@ -160,8 +191,8 @@ class Demo extends React.Component {
         <div className="row">
           <div className="col-12">
             <div>
-              <h3>{this.state.example.title}</h3>
-              <ReactGrid ref='reactgrid' {...this.state.example.config} />
+              <h3>{this.state.example.title} {(this.state.toggled > 0) ? <span>({this.state.toggled} selected)</span> : null }</h3>
+              <ReactGrid ref='reactgrid' {...this.state.example.config} onSort={this.sort.bind(this)} onPage={this.page.bind(this)} onToggle={this.toggle.bind(this)} />
             </div>
           </div>
         </div>

@@ -15,22 +15,21 @@ function toggleRow(rowData, dispatch, ev) {
 
 const GridBody = (props) => {
   var content = null;
-  if(props.bodyErrors){
+  if(props.dataErrorMessage){
     content = (
       <div className='error-message'>
-        {props.bodyErrors}
+        {props.dataErrorMessage}
       </div>
     );
   } else if(props.data === null){
     content = <PerceivedLoading {...props} />
   } else if(props.data.length === 0){
-    console.log('give the empty message');
     content = <EmptyMessage>{props.emptyMessage}</EmptyMessage>
   } else {
     content = props.data.map(function(rowData, rowIndex){
-        return <div className='rg-row-container' key={ 'row'+rowIndex }>
-                  <div className={classnames({ 'rg-row':true, 'striped-row':rowIndex%2===0, 'clickable': props.renderExpandedRow })}
-                       onClick={toggleRow.bind(this, rowData, props.dispatch)}>
+        return <div className={classnames({'rg-row-container':true, 'clickable': props.renderExpandedRow})} key={ 'row'+rowIndex }
+                  onClick={toggleRow.bind(this, rowData, props.dispatch)}>
+                  <div className={classnames({ 'rg-row':true, 'striped-row':rowIndex%2===0 })}>
                     <Checkbox {...props} rowData={rowData} />
                     {props.renderRow(rowData, rowIndex).map(function(item, cellIndex){
                       return <div key={'row'+rowIndex+'cell'+cellIndex}

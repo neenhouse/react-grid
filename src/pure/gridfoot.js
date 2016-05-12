@@ -43,8 +43,8 @@ const GridFoot = (props) => {
   if(props.total === 0){
     return null;
   } else {
-		var prevPageClass = 'rg-pager' + ((props.allowPrevious) ? '' : ' disabled'),
-				nextPageClass = 'rg-pager' + ((props.allowNext) ? '' : ' disabled');
+		var prevPageClass = 'rg-pager-prev' + ((props.allowPrevious) ? '' : ' disabled'),
+				nextPageClass = 'rg-pager-next' + ((props.allowNext) ? '' : ' disabled');
     return (<div className='rg-footer'>
 			<div className="rg-pager-controls">
 				<input type="number"

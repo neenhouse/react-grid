@@ -1,8 +1,8 @@
 import React from 'react';
-
-const BulkSelection = ({bulkSelectionEnabled}) => {
+import Checkbox from './checkbox';
+const BulkSelection = ({bulkSelectionEnabled, bulkSelectionChecked, dispatch}) => {
 	if(bulkSelectionEnabled){
-		return <div className="grid-bulk"></div>;
+		return <Checkbox rowData={{ __all:true, checked:bulkSelectionChecked }} dispatch={dispatch} bulkSelectionEnabled={bulkSelectionEnabled}/>
 	} else {
 		return <noscript />;
 	}

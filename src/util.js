@@ -71,11 +71,21 @@ function calculatePager(nextPager, currPager, dataLength){
 	return nextPager;
 }
 
+function deepCompare(a, b){
+	return JSON.stringify(a) !== JSON.stringify(b);
+}
+
+function getChecked(data){
+	return data.filter(function(item){ return item.checked });
+}
+
 export default {
 	computeWidths:computeWidths,
 	getExpandColumnStyle:function(){
 		return expandColumnStyle;
 	},
 	findRecord:findRecord,
-	calculatePager:calculatePager
+	calculatePager:calculatePager,
+	deepCompare:deepCompare,
+	getChecked:getChecked
 };

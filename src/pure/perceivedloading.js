@@ -33,7 +33,7 @@ const PerceivedLoading = ({numberOfLoadingItems, bulkSelectionEnabled, columnHea
     dom.push(
       <div key={i} className="rg-row-container">
         <div key={i} className="rg-row">
-        { bulkSelectionEnabled ? <Checkbox {...this.props} /> : null }
+        <Checkbox bulkSelectionEnabled={bulkSelectionEnabled} rowData={{checked:false}} />
         { columnHeaders.map(function(item, cellIndex){
           var cellProps = { width: item.style.width, rowIndex:i, cellIndex:cellIndex, index:cellIndex };
           return <PerceivedCell key={i+'-'+cellIndex} {...cellProps}  />;

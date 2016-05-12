@@ -6,8 +6,9 @@
     .clickable{
       cursor:pointer;
     }
+    .bulk-selection,
     .bulk-checkbox{
-      padding-right:10px;
+      width:30px;
     }
     .empty-message{
       text-align: center;
@@ -18,6 +19,41 @@
       padding:10px;
       .rg-row{
         display:flex;
+        color:#999999;
+        text-transform: uppercase;
+        font-size:14px;
+        a{
+          color:#999999;
+          text-decoration:none;
+          display:block;
+          &.current,
+          &:hover{
+            color:#555555;
+          }
+          .arrows{
+            float:right;
+            width:10px;
+            text-align:right;
+            padding-right:10px;
+          }
+          i{
+            display:block;
+            float: right;
+            height: 8px;
+            width: 8px;
+            font-size: 12px;
+            background:#eeeeee;
+            &.current{
+              background: red;
+            }
+            &.north{
+
+            }
+            &.south{
+
+            }
+          }
+        }
       }
     }
     .rg-body{
@@ -48,19 +84,24 @@
     }
   }
   .rg-footer{
+    margin:20px 5px;
     .rg-pager-range,
     .rg-pager-controls{
       width:50%;
       display:inline-block;
+      .rg-pager-prev{
+        margin-left:10px;
+      }
+      .rg-pager-next{
+        margin-right:10px;
+      }
     }
     .rg-pager-range{
       text-align:right;
       .rg-pager-records{
         display:inline-block;
+        margin-left:10px;
       }
-    }
-    .rg-pager-controls{
-
     }
   }
 

@@ -43,6 +43,9 @@ ReactDOM.render(<ReactGrid {...options} />, document.body);
 // If set to true, renders a checkbox in the first column
 bulkSelectionEnabled: [React.PropTypes.bool, false],
 
+// Use client side paging
+clientSide: [React.PropTypes.bool, false],
+
 // Array of column definitions (required)
 // Ex: [{
 //			description: 'Name',
@@ -71,6 +74,12 @@ emptyMessage: [React.PropTypes.string, 'No records found.'],
 // Number of items to show when loading data (defaults to 10)
 numberOfLoadingItems: [React.PropTypes.number, 10],
 
+// Callback for sorting
+onSort: [React.PropTypes.func, function(sortData){ console.log('sort updated:', sortData)}],
+
+// Callback for paging
+onPage: [React.PropTypes.func, function(pageData){ console.log('page updated:', pageData)}],
+
 // Provide pager state
 pager: [React.PropTypes.object, {
   increments: [10, 20, 50, 100],
@@ -92,15 +101,9 @@ renderRow:[React.PropTypes.func.isRequired, null],
 // If set to false, will allow multiple rows to be expanded
 singleExpand: [React.PropTypes.bool, true],
 
-// Prop keys that determine if component is re-rendered
-updateProps: [React.PropTypes.array, ['pager', 'data']],
-
 // If set to false, does not render column headers
 useHeader: [React.PropTypes.bool, true],
 
 // Sets usage mode of pager (supports true, false, and 'manual')
-usePager: [React.PropTypes.any, true],
-
-// Unique identifier for data table instance
-idKey: [React.PropTypes.string, null]
+usePager: [React.PropTypes.any, true]
 ```
