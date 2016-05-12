@@ -140,30 +140,11 @@ class Demo extends React.Component {
 
         <div className="row">
           <div className="col-3">
-            <h3>Pre-sets</h3>
+            <h3>Controls</h3>
             { allExamples.map(function(example){
                 return <button key={example.title} onClick={this.loadExample.bind(this, example)}>{example.title}</button>;
               }.bind(this))
             }
-          </div>
-          <div className="col-4">
-            <h3>Options</h3>
-            <div className='form-group' style={formGroupStyle}>
-              <label>Pager:</label>
-              <input type="radio" name="usepager" onChange={function(){}} checked={this.state.example.config.usePager !== false} onClick={this.updateConfig.bind(this, 'usePager', true)}/> On &nbsp;
-              <input type="radio" name="usepager" onChange={function(){}} checked={this.state.example.config.usePager === false} onClick={this.updateConfig.bind(this, 'usePager', false)}/> Off
-            </div>
-            <div className='form-group' style={formGroupStyle}>
-              <label>Expandable Row:</label>
-              <input type="radio" name="userenderexpanded" onChange={function(){}} checked={this.state.example.config.renderExpandedRow !== false} onClick={this.updateConfig.bind(this, 'renderExpandedRow', renderExpandedRow)}/> On &nbsp;
-              <input type="radio" name="userenderexpanded" onChange={function(){}} checked={this.state.example.config.renderExpandedRow === false} onClick={this.updateConfig.bind(this, 'renderExpandedRow', false)}/> Off
-            </div>
-            <div className='form-group' style={formGroupStyle}>
-              <label>Bulk Selection:</label>
-              <input type="radio" name="usebulkselection" onChange={function(){}} checked={this.state.example.config.bulkSelectionEnabled !== false} onClick={this.updateConfig.bind(this, 'bulkSelectionEnabled', true)}/> On &nbsp;
-              <input type="radio" name="usebulkselection" onChange={function(){}} checked={this.state.example.config.bulkSelectionEnabled === false} onClick={this.updateConfig.bind(this, 'bulkSelectionEnabled', false)}/> Off
-            </div>
-            <h3>Triggers</h3>
             <div className='form-group' style={formGroupStyle}>
               <button onClick={this.toggleLoading.bind(this)}>Trigger 1s Reload</button>
             </div>
@@ -173,7 +154,7 @@ class Demo extends React.Component {
           </div>
           <div className="col-4">
             <h3>Edit Options</h3>
-            <textarea className={textAreaClassName} style={{ width:'100%', height:200}} value={this.state.configEdit} onChange={this.updateConfig.bind(this, 'full')}/>
+            <textarea className={textAreaClassName} style={{ width:'100%', height:100}} value={this.state.configEdit} onChange={this.updateConfig.bind(this, 'full')}/>
           </div>
         </div>
         <div className="row">

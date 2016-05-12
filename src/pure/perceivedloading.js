@@ -21,7 +21,7 @@ const PerceivedCell = ({rowIndex, cellIndex, width}) => {
     width:width
   };
   return (
-    <div style={cellStyle} className='grid-cell'>
+    <div style={cellStyle} className='rg-cell'>
       <span className='perceived-loading' style={style}>&nbsp;</span>
     </div>
   );
@@ -31,19 +31,19 @@ const PerceivedLoading = ({numberOfLoadingItems, bulkSelectionEnabled, columnHea
   var dom = [];
   for(var i=0; i<numberOfLoadingItems; i++){
     dom.push(
-      <div key={i} className="grid-row">
+      <div key={i} className="rg-row-container">
+        <div key={i} className="rg-row">
         { bulkSelectionEnabled ? <Checkbox {...this.props} /> : null }
         { columnHeaders.map(function(item, cellIndex){
           var cellProps = { width: item.style.width, rowIndex:i, cellIndex:cellIndex, index:cellIndex };
           return <PerceivedCell key={i+'-'+cellIndex} {...cellProps}  />;
         })}
         { (renderExpandedRow) ? <Arrow expanded={false} />: null }
+        </div>
       </div>
     );
   }
-  return <div className="grid-body">
-  { dom }
-  </div>;
+  return <div>{dom}</div>;
 }
 
 

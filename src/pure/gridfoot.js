@@ -43,10 +43,10 @@ const GridFoot = (props) => {
   if(props.total === 0){
     return null;
   } else {
-		var prevPageClass = 'pager' + ((props.allowPrevious) ? '' : ' pager-disabled'),
-				nextPageClass = 'pager' + ((props.allowNext) ? '' : ' pager-disabled');
-    return (<div className='grid-footer'>
-			<div className="pager-controls">
+		var prevPageClass = 'rg-pager' + ((props.allowPrevious) ? '' : ' disabled'),
+				nextPageClass = 'rg-pager' + ((props.allowNext) ? '' : ' disabled');
+    return (<div className='rg-footer'>
+			<div className="rg-pager-controls">
 				<input type="number"
 							onChange={updateIndex.bind(this, props.dispatch, props.pages)}
 							min="1"
@@ -56,8 +56,8 @@ const GridFoot = (props) => {
 				<button className={prevPageClass} onClick={previous.bind(this, props.dispatch, props.index)}>‹</button>
 				<button className={nextPageClass} onClick={next.bind(this, props.dispatch, props.index, props.pages)}>›</button>
 			</div>
-      <div className="pager-range">
-        <select className="pager-select"
+      <div className="rg-pager-range">
+        <select className="rg-pager-select"
                 value={props.items}
                 onChange={updateIncrement.bind(this, props.dispatch)}>
         { props.increments.map(function(increment){
@@ -72,7 +72,7 @@ const GridFoot = (props) => {
           );
         })}
         </select>
-        <div className="pager-records">{props.first} - {props.last} of {props.total}</div>
+        <div className="rg-pager-records">{props.first} - {props.last} of {props.total}</div>
       </div>
     </div>
     );

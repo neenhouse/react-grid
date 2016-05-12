@@ -208,8 +208,8 @@ class ReactGrid extends React.Component {
 		var columnHeaders = Util.computeWidths(this.props.columnHeaders, this.props.renderExpandedRow !== false)
 
 		return (
-				<div className='react-grid-wrapper'>
-					<div className='grid-table'>
+				<div className='rg-wrapper'>
+					<div className='rg-grid'>
 						<GridHead {...this.props} data={this.getData()} columnHeaders={columnHeaders} />
 						<GridBody {...this.props} data={this.getData()} dispatch={this.dispatch.bind(this)} columnHeaders={columnHeaders} />
 					</div>

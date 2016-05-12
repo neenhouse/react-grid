@@ -13,6 +13,6 @@ var props = {
 
 describe('<GridFoot />', function() {
   it("Render <GridFoot /> with total", function () {
-    expect(shallow(<GridFoot {...props} />).is('.grid-footer')).to.equal(true);
+    expect(shallow(<GridFoot {...props} />).is('.rg-footer')).to.equal(true);
   });
 });

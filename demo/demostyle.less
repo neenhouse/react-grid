@@ -44,6 +44,12 @@ header {
   }
 }
 
+.errors{
+  box-shadow: 0 0 5px #d45252;
+  border-color: #b03535;
+  outline:none;
+}
+
 .colX (@index) when (@index > 0){
   .col-@{index}{
     width: unit((((1 * @index)/12)*100), %);

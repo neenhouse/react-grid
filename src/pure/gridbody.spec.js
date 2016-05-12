@@ -9,6 +9,6 @@ var props = {
 
 describe('<GridBody />', function() {
   it("Render <GridBody /> with defaults", function () {
-    expect(shallow(<GridBody {...props} />).is('.grid-body')).to.equal(true);
+    expect(shallow(<GridBody {...props} />).is('.rg-body')).to.equal(true);
   });
 });

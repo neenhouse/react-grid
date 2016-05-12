@@ -14,42 +14,41 @@ function toggleRow(rowData, dispatch, ev) {
 }
 
 const GridBody = (props) => {
+  var content = null;
   if(props.bodyErrors){
-    return (
+    content = (
       <div className='error-message'>
         {props.bodyErrors}
       </div>
     );
   } else if(props.data === null){
-    return <PerceivedLoading {...props} />
-  } else if(props.data === []){
-    return <EmptyMessage>{props.emptyMessage}</EmptyMessage>
+    content = <PerceivedLoading {...props} />
+  } else if(props.data.length === 0){
+    console.log('give the empty message');
+    content = <EmptyMessage>{props.emptyMessage}</EmptyMessage>
   } else {
-    return (
-      <div className="grid-body">
-        { props.data.map(function(rowData, rowIndex){
-            return <div className='row-container' key={ 'row'+rowIndex }>
-                      <div onClick={toggleRow.bind(this, rowData, props.dispatch)}
-                         className={classnames({ 'grid-row':true, 'striped-row':rowIndex%2===0, 'clickable': props.renderExpandedRow })}>
-                        <Checkbox {...props} rowData={rowData} />
-                        {props.renderRow(rowData, rowIndex).map(function(item, cellIndex){
-                          return <div key={'row'+rowIndex+'cell'+cellIndex}
-                                      className='grid-cell'
-                                      style={props.columnHeaders[cellIndex].style}>{item}</div>;
-                        })}
-                        {(props.renderExpandedRow) ? <Arrow expanded={rowData.expanded} />: null
-                        }
-                      </div>
-                      { props.renderExpandedRow ?
-                        <div className={ classnames({'expanded': true, hidden:!rowData.expanded}) }>
-                          { props.renderExpandedRow(rowData) }
-                        </div> : null
-                      }
-                  </div>;
-        })}
-      </div>
-    );
+    content = props.data.map(function(rowData, rowIndex){
+        return <div className='rg-row-container' key={ 'row'+rowIndex }>
+                  <div className={classnames({ 'rg-row':true, 'striped-row':rowIndex%2===0, 'clickable': props.renderExpandedRow })}
+                       onClick={toggleRow.bind(this, rowData, props.dispatch)}>
+                    <Checkbox {...props} rowData={rowData} />
+                    {props.renderRow(rowData, rowIndex).map(function(item, cellIndex){
+                      return <div key={'row'+rowIndex+'cell'+cellIndex}
+                                  className='rg-cell'
+                                  style={props.columnHeaders[cellIndex].style}>{item}</div>;
+                    })}
+                    {(props.renderExpandedRow) ? <Arrow expanded={rowData.expanded} />: null
+                    }
+                  </div>
+                  { props.renderExpandedRow ?
+                    <div className={ classnames({'expanded': true, hidden:!rowData.expanded}) }>
+                      { props.renderExpandedRow(rowData) }
+                    </div> : null
+                  }
+              </div>;
+    });
   }
+  return <div className="rg-body">{content}</div>
 }
 
 export default GridBody;

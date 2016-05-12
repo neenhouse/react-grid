@@ -1,58 +1,69 @@
-.react-grid-wrapper{
-  .grid-table {
+.rg-wrapper{
+  .rg-grid {
     width:100%;
-    .row-container{
+    font-family: Roboto, sans-serif;
+    color: rgba(0, 0, 0, 0.870588);
+    .clickable{
+      cursor:pointer;
+    }
+    .bulk-checkbox{
+      padding-right:10px;
+    }
+    .empty-message{
+      text-align: center;
+      padding: 50px;
+      background: #efefef;
+    }
+    .rg-header{
       padding:10px;
-      box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
-      border-radius: 2px;
-      background-color: rgb(255, 255, 255);
-      margin-bottom:10px;
-      transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-      box-sizing: border-box;
-      .expanded{
-        padding-top:20px;
+      .rg-row{
+        display:flex;
       }
     }
-    .grid-row {
-      display:flex;
-      color: rgba(0, 0, 0, 0.870588);
-      font-family: Roboto, sans-serif;
-      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-      .grid-cell{
-        &.perceived-loading{
-      		background:blue;
-      	}
-      }
-    }
-    .grid-header{
-      padding:10px;
-      .grid-row{
-        box-shadow:none;
-        background:none;
-      }
-    }
-    .grid-body {
-      .clickable{
-        cursor:pointer;
+    .rg-body{
+      .rg-row-container{
+        padding:10px;
+        box-shadow: rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
+        border-radius: 2px;
+        background-color: rgb(255, 255, 255);
+        margin-bottom:10px;
+        transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+        box-sizing: border-box;
+
+        .expanded{
+          padding-top:20px;
+        }
+
+        .rg-row {
+          display:flex;
+          -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+          .rg-cell{
+            word-wrap:break-word;
+            &.perceived-loading{
+          		background:blue;
+          	}
+          }
+        }
       }
     }
   }
-  .grid-footer{
-    .pager-range,
-    .pager-controls{
+  .rg-footer{
+    .rg-pager-range,
+    .rg-pager-controls{
       width:50%;
       display:inline-block;
     }
-    .pager-range{
+    .rg-pager-range{
       text-align:right;
-      .pager-records{
+      .rg-pager-records{
         display:inline-block;
       }
     }
-    .pager-controls{
+    .rg-pager-controls{
 
     }
   }
+
   .hidden {
     display:none;
   }

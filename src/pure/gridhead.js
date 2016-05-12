@@ -21,16 +21,16 @@ function sort(columnHeader, sortData, dispatch, ev){
 const GridHead = ({ columnHeaders, dispatch, sortData, bulkSelectionEnabled, renderExpandedRow }) => {
 	var currSort = (sortData && sortData[0]) || {};
 	return (
-		<div className="grid-header">
-			<div className="grid-row">
+		<div className="rg-header">
+			<div className="rg-row">
 			<BulkSelection bulkSelectionEnabled={bulkSelectionEnabled} />
 			{ columnHeaders.map(function(columnHeader, index){
 				if(columnHeader.sortColumn){
 					var current = (currSort.sortColumn === columnHeader.sortColumn) ? 'current' : '',
-							ascClass = 'caret4 north' + ((current && currSort.sortDirection === 'ASC') ? ' sortdirection' : ''),
-							descClass = 'caret4 south' + ((current && currSort.sortDirection === 'DESC') ? ' sortdirection' : ''),
+							ascClass = 'north' + ((current && currSort.sortDirection === 'ASC') ? ' sortdirection' : ''),
+							descClass = 'south' + ((current && currSort.sortDirection === 'DESC') ? ' sortdirection' : ''),
 							style = {};
-					return (<div className='grid-cell' key={index} style={columnHeader.style}>
+					return (<div className='rg-cell' key={index} style={columnHeader.style}>
 							<a href='#' onClick={sort.bind(null, columnHeader, sortData, dispatch)} className={current}>
 									{columnHeader.description}
 									<i className={ascClass}></i>
@@ -39,7 +39,7 @@ const GridHead = ({ columnHeaders, dispatch, sortData, bulkSelectionEnabled, ren
 						</div>);
 				} else {
 					return (
-						<div className='grid-cell' key={index} style={columnHeader.style}>
+						<div className='rg-cell' key={index} style={columnHeader.style}>
 							{columnHeader.description}
 						</div>
 					);

@@ -9,6 +9,6 @@ var props = {
 
 describe('<GridHead />', function() {
   it("Render <GridHead /> with defaults", function () {
-    expect(shallow(<GridHead {...props} />).is('.grid-header')).to.equal(true);
+    expect(shallow(<GridHead {...props} />).is('.rg-header')).to.equal(true);
   });
 });
