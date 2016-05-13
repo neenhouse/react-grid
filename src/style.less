@@ -35,22 +35,29 @@
             width:10px;
             text-align:right;
             padding-right:10px;
+            margin-top:3px;
           }
           i{
             display:block;
             float: right;
-            height: 8px;
-            width: 8px;
-            font-size: 12px;
-            background:#eeeeee;
             &.current{
-              background: red;
             }
             &.north{
-
+            	border-left: 5px solid transparent;
+            	border-right: 5px solid transparent;
+            	border-bottom: 5px solid #999999;
+              margin-bottom:2px;
+              &.current{
+                border-bottom-color:#666666 !important;
+              }
             }
             &.south{
-
+              border-left: 5px solid transparent;
+            	border-right: 5px solid transparent;
+            	border-top: 5px solid #999999;
+              &.current{
+                border-top-color:#666666 !important;
+              }
             }
           }
         }

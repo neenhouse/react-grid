@@ -1,6 +1,6 @@
 # React Grid [![Build Status](https://travis-ci.org/neenhouse/react-grid.svg?branch=master)](https://travis-ci.org/neenhouse/react-grid)
 
-ES6/7 Grid written in ReactJS
+Flexible, Functional Grid Component Written For ReactJS
 
 
 ## Required Dependencies
@@ -65,6 +65,9 @@ data: [React.PropTypes.array, null],
 // Function that is executed on callback when accessing data response
 dataAccessor: [React.PropTypes.func, function(response){ return response; }],
 
+// Message to display if data error occurs
+dataErrorMessage: [React.PropTypes.string, null],
+
 // Callback function for table interactions
 dispatch: [React.PropTypes.func, function(){}],
 
@@ -74,11 +77,14 @@ emptyMessage: [React.PropTypes.string, 'No records found.'],
 // Number of items to show when loading data (defaults to 10)
 numberOfLoadingItems: [React.PropTypes.number, 10],
 
+// Callback for paging
+onPage: [React.PropTypes.func, function(pageData){ console.log('page updated:', pageData)}],
+
 // Callback for sorting
 onSort: [React.PropTypes.func, function(sortData){ console.log('sort updated:', sortData)}],
 
-// Callback for paging
-onPage: [React.PropTypes.func, function(pageData){ console.log('page updated:', pageData)}],
+// Callback for toggling
+onToggle: [React.PropTypes.func, function(allToggled){ console.log('toggled:', allToggled)}],
 
 // Provide pager state
 pager: [React.PropTypes.object, {
@@ -97,6 +103,12 @@ renderExpandedRow: [React.PropTypes.any, false],
 //   return <span>{rowData.firstName}</span>;
 // }
 renderRow:[React.PropTypes.func.isRequired, null],
+
+// Sets initial sort information
+sortData: [React.PropTypes.object, {
+  sortColumn:null,
+  sortDirection:null
+}],
 
 // If set to false, will allow multiple rows to be expanded
 singleExpand: [React.PropTypes.bool, true],

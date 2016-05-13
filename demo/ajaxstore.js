@@ -7,12 +7,16 @@ class AjaxStore {
   get(first, last, sortColumn, sortDirection){
     var peopleJSON = _peopleJSON;
     if(sortColumn && sortDirection){
-      peopleJSON = peopleJSON.sort(function(a, b){
+      peopleJSON.sort(function(a, b){
+        var multipler = 1;
         if(sortDirection === 'DESC'){
-          return a[sortColumn] > b[sortColumn];
-        } else {
-          return a[sortColumn] < b[sortColumn];
+          multipler = -1;
         }
+        var aValue = (a[sortColumn].toLowerCase && a[sortColumn].toLowerCase()) || a[sortColumn],
+            bValue = (b[sortColumn].toLowerCase && b[sortColumn].toLowerCase()) || b[sortColumn];
+        if(aValue < bValue) return -1 * multipler;
+        if(aValue > bValue) return 1 * multipler;
+        return 0;
       });
     }
     if(typeof first === 'number'){

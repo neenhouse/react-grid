@@ -79,7 +79,7 @@ class Demo extends React.Component {
       }
       this.forceUpdate();
       setTimeout(function(){
-        this.state.example.config.data = AjaxStore.get(start, end, sortDirection, sortColumn);
+        this.state.example.config.data = AjaxStore.get(start, end, sortColumn, sortDirection);
         this.state.example.config.pager.total = AjaxStore.getTotal();
         this.forceUpdate();
       }.bind(this), 1000);
@@ -166,7 +166,7 @@ class Demo extends React.Component {
 
         <div className="row">
           <div className="col-5">
-            <h3>Test Controls</h3>
+            <h3>Test npm Controls</h3>
             { /*
               TODO: toggle between examples
               allExamples.map(function(example){
