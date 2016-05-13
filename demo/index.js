@@ -28,7 +28,7 @@ var columnHeaders = [{
 
 function renderRow(rowData, i){
   return [
-    <span key={'row'+i+'-col1'}>{rowData.firstName} {rowData.lastName}</span>,
+    <a href="#" key={'row'+i+'-col1'}>{rowData.firstName} {rowData.lastName}</a>,
     <span key={'row'+i+'-col2'}>{rowData.email}</span>,
     <span key={'row'+i+'-col3'}>{rowData.address}</span>,
     <span key={'row'+i+'-col4'}>{rowData.rating}</span>

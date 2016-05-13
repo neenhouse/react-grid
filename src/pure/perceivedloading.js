@@ -27,8 +27,11 @@ const PerceivedCell = ({rowIndex, cellIndex, width}) => {
   );
 }
 
-const PerceivedLoading = ({numberOfLoadingItems, bulkSelectionEnabled, columnHeaders, renderExpandedRow}) => {
+const PerceivedLoading = ({pager, numberOfLoadingItems, bulkSelectionEnabled, columnHeaders, renderExpandedRow}) => {
   var dom = [];
+  if(pager && pager.items){
+    numberOfLoadingItems = pager.items;
+  }
   for(var i=0; i<numberOfLoadingItems; i++){
     dom.push(
       <div key={i} className="rg-row-container">
