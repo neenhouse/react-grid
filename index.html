@@ -12,16 +12,18 @@
   <body>
     <section class="page-header">
       <h1 class="project-name">React-grid</h1>
-      <h2 class="project-tagline"></h2>
+      <h2 class="project-tagline">Flexible, Functional Grid Component Written For ReactJS</h2>
       <a href="https://github.com/neenhouse/react-grid" class="btn">View on GitHub</a>
-      <a href="http://neenhouse.github.io/react-grid/demo.html" class="btn">View Demo</a>
+      <a href="https://github.com/neenhouse/react-grid/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/neenhouse/react-grid/tarball/master" class="btn">Download .tar.gz</a>
     </section>
 
     <section class="main-content">
       <h1>
-<a id="react-grid" class="anchor" href="#react-grid" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>React Grid</h1>
+<a id="react-grid-" class="anchor" href="#react-grid-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>React Grid <a href="https://travis-ci.org/neenhouse/react-grid"><img src="https://travis-ci.org/neenhouse/react-grid.svg?branch=master" alt="Build Status"></a>
+</h1>
 
-<p>ES6/7 Grid written in ReactJS</p>
+<p>Flexible, Functional Grid Component Written For ReactJS</p>
 
 <h2>
 <a id="required-dependencies" class="anchor" href="#required-dependencies" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Required Dependencies</h2>
@@ -40,7 +42,7 @@
 <h2>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
 
-<pre><code>npm install react-grid --save;
+<pre><code>npm install neenhouse-react-grid --save;
 </code></pre>
 
 <h2>
@@ -64,6 +66,9 @@ ReactDOM.render(&lt;ReactGrid {...options} /&gt;, document.body);
 <pre><code>// If set to true, renders a checkbox in the first column
 bulkSelectionEnabled: [React.PropTypes.bool, false],
 
+// Use client side paging
+clientSide: [React.PropTypes.bool, false],
+
 // Array of column definitions (required)
 // Ex: [{
 //          description: 'Name',
@@ -83,6 +88,9 @@ data: [React.PropTypes.array, null],
 // Function that is executed on callback when accessing data response
 dataAccessor: [React.PropTypes.func, function(response){ return response; }],
 
+// Message to display if data error occurs
+dataErrorMessage: [React.PropTypes.string, null],
+
 // Callback function for table interactions
 dispatch: [React.PropTypes.func, function(){}],
 
@@ -91,6 +99,15 @@ emptyMessage: [React.PropTypes.string, 'No records found.'],
 
 // Number of items to show when loading data (defaults to 10)
 numberOfLoadingItems: [React.PropTypes.number, 10],
+
+// Callback for paging
+onPage: [React.PropTypes.func, function(pageData){ console.log('page updated:', pageData)}],
+
+// Callback for sorting
+onSort: [React.PropTypes.func, function(sortData){ console.log('sort updated:', sortData)}],
+
+// Callback for toggling
+onToggle: [React.PropTypes.func, function(allToggled){ console.log('toggled:', allToggled)}],
 
 // Provide pager state
 pager: [React.PropTypes.object, {
@@ -110,20 +127,20 @@ renderExpandedRow: [React.PropTypes.any, false],
 // }
 renderRow:[React.PropTypes.func.isRequired, null],
 
+// Sets initial sort information
+sortData: [React.PropTypes.object, {
+  sortColumn:null,
+  sortDirection:null
+}],
+
 // If set to false, will allow multiple rows to be expanded
 singleExpand: [React.PropTypes.bool, true],
-
-// Prop keys that determine if component is re-rendered
-updateProps: [React.PropTypes.array, ['pager', 'data']],
 
 // If set to false, does not render column headers
 useHeader: [React.PropTypes.bool, true],
 
 // Sets usage mode of pager (supports true, false, and 'manual')
-usePager: [React.PropTypes.any, true],
-
-// Unique identifier for data table instance
-idKey: [React.PropTypes.string, null]
+usePager: [React.PropTypes.any, true]
 </code></pre>
 
       <footer class="site-footer">
@@ -134,6 +151,6 @@ idKey: [React.PropTypes.string, null]
 
     </section>
 
-
+  
   </body>
 </html>
